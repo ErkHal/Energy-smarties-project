@@ -1,31 +1,167 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-
+import { View, Text, StyleSheet, TextInput, Picker, Modal, TouchableHighlight } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
+import { Dropdown } from 'react-native-material-dropdown';
+//import * as Font from 'expo-font';
+ 
+ 
 export default class Header extends React.Component {
     
-    render() {
-        return (
-            <View style={styles.header}>
-              <Text style={styles.appTitle}>Greener Apps</Text>
-            </View>
-          );
+  
+    state = {user: 'asia', modalVisible: false}
+    setModalVisible(visible) {
+        this.setState({modalVisible: visible});
     }
+    //Trying to get the fonts to work
+    /*async componentDidMount() {
+    await Font.loadAsync({
+      'montserrat-medium': require('../../assets/fonts/Montserrat-Medium.ttf'),
+    });
+    this.setState({ fontLoaded: true });
+  }*/
+    render() {
+        let sortingData = [{
+            value: 'Revelance',
+          }, {
+            value: 'Country',
+          }, {
+            value: 'City',
+          }];
+        return (   
+            <View style={[styles.header, styles.shadowUnderHeader]}>
+                <View style={styles.firstRow}>
+                        <Ionicons style={styles.icon}name="ios-menu" size={32}/>
+                        <Text style={styles.appTitle}>Greener Apps</Text>
+                        <Ionicons style={styles.icon}name="ios-information-circle-outline" size={32} onPress={() => {this.setModalVisible(true)}}/>
+                </View>
+                <View style={styles.secondRow}>
+                    <TextInput style={styles.textInput} placeholder="Search"/>
+                </View>
+                <View style={styles.thirdRow}>
+                    <Dropdown textColor={"#707070"}
+                        label='Sort by'
+                        data={sortingData}
+                    />
+                </View>
+                <Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible}>
+                    <View style={styles.modal}>
+                        <View style={styles.firstRowModal}>
+                            <Text style={styles.appTitle}>Greener Apps</Text>
+                            <Ionicons style={styles.icon}name="ios-close" size={32} onPress={() => {
+                            this.setModalVisible(!this.state.modalVisible)
+                            }}/>
+                        </View>
+                        <Text style={styles.h1}>Total score</Text>
+                        <Text style={styles.modalText}>Weighted sum of individual scores scaled to 0-10: energy score (weight = 4), company score (weight = 2), city score (weight = 2) and country score (weight = 2). </Text>
+                        <Text style={styles.h1}>Energy score</Text>
+                        <Text style={styles.modalText}>Battery consumption (mAh) of an app measured by Greenspector®. Energy scores can be compared only within a category. Lower consumption results in higher score.</Text>
+                        <Text style={styles.h1}>Company score</Text>
+                        <Text style={styles.modalText}>Company-derived carbon footprint per employee. Lower carbon dioxide emissions result in higher score.</Text>
+                        <Text style={styles.h1}>City score</Text>
+                        <Text style={styles.modalText}>Helsinki, Espoo and Vantaa: Carbon footprint for 2018 from Helsinki Region Infoshare (https://hri.fi/data/en_GB/dataset/paakaupunkiseudun-kasvihuonekaasupaastot/resource/665bf9b6-5627-4763-935c-9c9723c4b8b8)
+Other cities: Moran, D., Kanemoto K; Jiborn, M., Wood, R., Többen, J., and Seto, K.C. (2018) Carbon footprints of 13,000 cities. Environmental Research Letters DOI: 10.1088/1748-9326/aac72a.
+Lower carbon dioxide emissions per citizen result in higher score.</Text>
+                        <Text style={styles.h1}>Country score</Text>
+                        <Text style={styles.modalText}>Data from the 2018 Global Green Economy Index (GGEI) published by Dual Citizen LLC (https://dualcitizeninc.com/global-green-economy-index/). 
+Higher index value results in higher score. 
+</Text>
+                    </View>
+                </Modal>    
+            </View>
+        );
+    }
+}
+//Makes the shadows work on android and ios. Transforms elevation into other styling info
+  function elevationShadowStyle(elevation) {
+    return {
+      elevation,
+      shadowColor: 'black',
+      shadowOffset: { width: 0, height: 0.5 * elevation },
+      shadowOpacity: 0.3,
+      shadowRadius: 0.8 * elevation
+    };
   }
-
+ 
   const styles = StyleSheet.create({
-      header: {
-          backgroundColor: '#FFF',
-          width: '100%',
-          height: 200,
-          display: 'flex',
-          justifyContent: 'center',
-          alignContent: 'center',
-          borderBottomColor: '#000',
-          borderBottomWidth: 2
-      },
-      appTitle: {
-          textAlign: 'center',
-          color: '#00FF00',
-          fontSize: 50
-      }
+    text: {
+        fontSize: 30,
+        alignSelf: 'center',
+        color: 'red'
+     },  
+    shadowUnderHeader: elevationShadowStyle(5),
+    header: {
+        backgroundColor: '#FAFAFA',
+        width: '100%',
+        height: 200,
+        display: 'flex',
+        alignItems: "center",
+    },
+        firstRow: {
+        display: 'flex',
+        alignItems: "center",
+        flexDirection: 'row',
+        paddingTop: 40,
+        paddingBottom: 10
+    },
+    secondRow: {
+        display: 'flex',
+        alignItems: "center",
+        flexDirection: 'row',
+        paddingTop: 5,
+        },
+    thirdRow: {
+        width: '90%',
+        },
+    appTitle: {
+        paddingTop: 0,
+        textAlign: 'center',
+        color: '#2CBC52',
+        fontSize: 30,
+        //fontFamily: 'montserrat-medium'
+    }, 
+    icon: {
+        color: '#707070',
+        fontSize: 30,
+        paddingLeft: 20,
+        paddingRight: 30,
+        paddingTop: 5
+    },
+    searchIcon: {
+        color: '#707070',
+        fontSize: 30,
+        paddingTop: 5
+    },
+    textInput: {
+        height: 40,
+        width: '90%',
+        backgroundColor: '#FFFFFF',
+        textAlign: "left",
+        paddingLeft: 10,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#AEAEAE',
+    },
+    sortByText: {
+        color: '#707070'
+    },
+    firstRowModal: {
+        display: 'flex',
+        alignItems: "center",
+        flexDirection: 'row',
+        paddingTop: 40,
+        paddingBottom: 10,
+        paddingLeft: 50
+    },
+    h1: {
+        textAlign: "center",
+        fontSize: 20
+    },
+    modalText: {
+        paddingTop: 5,
+        paddingBottom: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
+        textAlign: 'justify'
+    }
   })
+
