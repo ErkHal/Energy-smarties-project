@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Header from './src/components/header/header';
 import AppList from './src/components/app-list/AppList';
 import * as Font from 'expo-font';

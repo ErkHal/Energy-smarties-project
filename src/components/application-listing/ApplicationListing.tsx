@@ -1,20 +1,75 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Animated } from "react-native";
 import { Application } from '../../types';
+import { Container, Left, Right } from 'native-base';
+import { StylingConstants } from "../../constants";
 
 interface Props {
     appInfo: Application;
 }
 
-export const ApplicationListing = (props: Props) => {
-    return(
-        <View style={styles.listing}>
-            <Text style={styles.appName}>{props.appInfo.name}</Text>
-            <Text style={styles.appCategory}>{props.appInfo.category}</Text>
-            <Text style={styles.appCity}>City: {props.appInfo.city}</Text>
-            <Text style={styles.appCountry}>Country: {props.appInfo.country}</Text>
-        </View>
-    )
+interface State {
+    isOpened: boolean;
+}
+
+export class ApplicationListing extends React.Component<Props, State> {
+
+    private height = new Animated.Value(StylingConstants.listingHeight.CLOSED);
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isOpened: false
+        }
+      }
+
+    render() {
+        const { name, category, city, country } = this.props.appInfo;
+        return(
+            <Animated.View style={[styles.listing, { height: this.height }]}
+            onTouchEnd={() => this.toggleHeight()}>
+                <Container>
+                    <Text style={styles.appName}>{name}</Text>
+                    <Text style={styles.appCategory}>{category}</Text>
+                    {
+                        this.isOpened() && (
+                        <View>
+                            <Text style={styles.appCity}>City: {city}</Text>
+                            <Text style={styles.appCountry}>Country: {country}</Text>
+                        </View>
+                        )}
+                </Container>
+            </Animated.View>
+        )
+    }
+
+    private animateTransition(toValue: number) {
+        Animated.spring(this.height, {
+          toValue,
+          tension: 20
+        }).start();
+      }
+
+    isOpened() {
+        return this.state.isOpened
+    }
+
+    toggleHeight() {
+        this.state.isOpened
+        ? this.closeListing()
+        : this.openListing()
+    }
+
+    closeListing() {
+        this.animateTransition(StylingConstants.listingHeight.CLOSED)
+        this.setState({ isOpened: false })
+    }
+
+    openListing() {
+        this.animateTransition(StylingConstants.listingHeight.OPENED)
+        this.setState({ isOpened: true })
+    }
 }
 
 const styles = StyleSheet.create({

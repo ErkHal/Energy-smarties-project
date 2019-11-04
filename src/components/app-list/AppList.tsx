@@ -3,6 +3,7 @@ import { View, ScrollView, Text, StyleSheet } from "react-native";
 import { ApplicationListing } from '../application-listing/ApplicationListing';
 import { dummyApps } from '../../dummyApps';
 import { Application } from "../../types";
+import { StylingConstants } from "../../constants";
 
 interface State {
     applicationsList: Application[];
@@ -43,10 +44,6 @@ export default class AppList extends React.Component<{}, State> {
               }
             </ScrollView>
           );
-    }
-
-    mapAppListToViews() {
-
     }
   }
 
