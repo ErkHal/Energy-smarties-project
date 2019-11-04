@@ -1,9 +1,11 @@
 import React from "react";
 import { View, ScrollView, Text, StyleSheet } from "react-native";
 import { ApplicationListing } from '../application-listing/ApplicationListing';
+import { dummyApps } from '../../dummyApps';
+import { Application } from "../../types";
 
 interface State {
-    applicationsList: string[];
+    applicationsList: Application[];
 }
 
 export default class AppList extends React.Component<{}, State> {
@@ -12,7 +14,7 @@ export default class AppList extends React.Component<{}, State> {
         super(props);
 
         this.state = {
-            applicationsList: ['Wolt', 'Uber Eats', 'Foodora', 'Pizza Online']
+            applicationsList: dummyApps
         }
       }
     
@@ -29,8 +31,7 @@ export default class AppList extends React.Component<{}, State> {
                 }}
                 key={index}>
                 <ApplicationListing 
-                    appName={this.state.applicationsList[index]}
-                    category={'Food Delivery'}/>
+                    appInfo={this.state.applicationsList[index]}/>
               </View>
             );
           });

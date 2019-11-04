@@ -1,16 +1,17 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { Application } from '../../types';
 
 interface Props {
-    appName: string;
-    category: string;
+    appInfo: Application;
 }
 
 export const ApplicationListing = (props: Props) => {
     return(
         <View style={styles.listing}>
-            <Text style={styles.appName}>{props.appName}</Text>
-            <Text style={styles.appCategory}>{props.category}</Text>
+            <Text style={styles.appName}>{props.appInfo.name}</Text>
+            <Text style={styles.appCategory}>{props.appInfo.category}</Text>
+            <Text>City: {props.appInfo.city}</Text>
         </View>
     )
 }
