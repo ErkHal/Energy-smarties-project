@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TextInput, Picker, Modal, TouchableHighlight, ScrollView } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-material-dropdown';
- 
+ import { StylingConstants } from '../../constants';
  
 export default class Header extends React.Component {
     
@@ -84,8 +84,8 @@ export default class Header extends React.Component {
     shadowUnderHeader: elevationShadowStyle(5),
     header: {
         backgroundColor: '#FAFAFA',
-        width: '100%',
-        height: '35%',
+        width: StylingConstants.display.width,
+        height: StylingConstants.display.height / 4,
         display: 'flex',
         alignItems: "center",
     },
