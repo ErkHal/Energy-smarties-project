@@ -1,9 +1,12 @@
+import { COUNTRY } from "./countries";
+
 export interface Application {
     name: string;
     category: AppCategory;
     city: string;
     country: string;
-    scores: AppScores;
+    totalScore: number;
+    subScores: AppScore[];
 }
 
 export enum AppCategory {
@@ -11,10 +14,7 @@ export enum AppCategory {
     MOBILITY = 'Mobility'
 }
 
-export interface AppScores {
-    totalScore: number;
-    energyScore: number;
-    companyScore: number;
-    cityScore: number;
-    countryScore: number;
+export interface AppScore {
+    label: string;
+    value: number;
 }

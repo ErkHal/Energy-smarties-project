@@ -27,7 +27,7 @@ export default class AppList extends React.Component<{}, State> {
               <View
                 style={{
                   flex: 1,
-                  marginVertical: 15,
+                  marginVertical: 20,
                   marginHorizontal: 20
                 }}
                 key={index}>

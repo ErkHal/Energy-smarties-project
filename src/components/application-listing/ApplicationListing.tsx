@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet, Animated } from "react-native";
+import { View, Text, StyleSheet, Animated, TouchableOpacity } from "react-native";
 import { Application } from '../../types';
 import { Container, Left, Right } from 'native-base';
 import { StylingConstants } from "../../constants";
+import { getFlagEmoji, getCountryName } from '../../countries';
 
 interface Props {
     appInfo: Application;
@@ -25,22 +26,59 @@ export class ApplicationListing extends React.Component<Props, State> {
       }
 
     render() {
-        const { name, category, city, country } = this.props.appInfo;
+        const { name, category, city, country, totalScore, subScores } = this.props.appInfo;
+
+        // Map partial scores and labels
+        const partialScores = subScores.map((score) => {
+            return(
+                <View key={score.label} style={{ marginTop: 10 }}>
+                    <Text style={styles.scoreLabel}>{score.label}</Text>
+                    <Text style={styles.scoreValue}>{score.value}</Text>
+                </View>
+            )
+        })
+
         return(
-            <Animated.View style={[styles.listing, { height: this.height }]}
-            onTouchEnd={() => this.toggleHeight()}>
+            <TouchableOpacity onPress={() => this.toggleHeight()}>
+            <Animated.View style={[styles.listing, { height: this.height }]}>
                 <Container>
-                    <Text style={styles.appName}>{name}</Text>
-                    <Text style={styles.appCategory}>{category}</Text>
+                    <View style={styles.container}>
+                        <Left style={{flexBasis: '70%'}}>
+                            <Text style={styles.appName}>{name}</Text>
+                            <Text style={styles.appCategory}>{category}</Text>
+                        </Left>
+                        <Right style={{flexBasis: '30%'}}>
+                            <Text style={styles.totalScore}>{totalScore}</Text>
+                        </Right>
+                    </View>
                     {
                         this.isOpened() && (
-                        <View>
-                            <Text style={styles.appCity}>City: {city}</Text>
-                            <Text style={styles.appCountry}>Country: {country}</Text>
-                        </View>
-                        )}
+                        <Animated.View style={{
+                            ...styles.container,
+                            opacity: this.height.interpolate({
+                                inputRange: [StylingConstants.listingHeight.CLOSED, StylingConstants.listingHeight.OPENED],
+                                outputRange: [0, 1],
+                                extrapolate: 'clamp'
+                            })}}>
+                            <Left style={{flexBasis: '50%'}}>
+                                <Text style={styles.scoreLabel}>City</Text>
+                                <Text style={styles.appCity}>{city}</Text>
+                            </Left>
+                            <Right style={{flexBasis: '50%'}}>
+                                <Text style={{...styles.scoreLabel, textAlign: 'left'}}>Country</Text>
+                                <Text style={styles.appCountry}>{getCountryName(country)} {getFlagEmoji(country)}</Text>
+                            </Right>
+                            <Left style={{
+                                flexBasis: '100%',
+                                marginTop: 30
+                            }}>
+                                { partialScores }
+                            </Left>
+                        </Animated.View>
+                    )}
                 </Container>
             </Animated.View>
+            </TouchableOpacity>
         )
     }
 
@@ -74,10 +112,18 @@ export class ApplicationListing extends React.Component<Props, State> {
 
 const styles = StyleSheet.create({
     listing: {
-        borderBottomWidth: 1,
-        borderBottomColor: '#505050',
+        borderBottomWidth: 2,
+        borderBottomColor: 'rgb(220, 220, 220)',
         display: 'flex',
         flexDirection: 'column'
+    },
+    container: {
+        marginTop: 5,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    totalScore: {
+        fontSize: 30
     },
     appName: {
         color: 'black',
@@ -87,15 +133,23 @@ const styles = StyleSheet.create({
     appCategory: {
         color: 'darkgray',
         width: '100%',
-        fontSize: 15
+        fontSize: 15,
+        marginTop: 5
     },
     appCity: {
-        marginTop: 15,
         fontSize: 20,
-        width: '50%'
+        marginTop: 5
     },
     appCountry: {
-        width: '50%',
         fontSize: 20,
+        marginTop: 5
+    },
+    scoreLabel: {
+        marginTop: 6,
+        fontSize: 15,
+        color: '#010101'
+    },
+    scoreValue: {
+        marginTop: 5
     }
 })
