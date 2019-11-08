@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Header from './src/components/header/header';
+import AppList from './src/components/app-list/AppList';
 import * as Font from 'expo-font';
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Header/>
+      <AppList/>
     </View>
   );
 }
