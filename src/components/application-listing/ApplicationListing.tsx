@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Animated, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Animated, TouchableOpacity, PixelRatio } from "react-native";
 import { Application } from '../../types';
 import { Container, Left, Right } from 'native-base';
 import { StylingConstants } from "../../constants";
@@ -15,6 +15,10 @@ interface State {
 
 export class ApplicationListing extends React.Component<Props, State> {
 
+    private getAdaptedOpenedHeight = PixelRatio.get() >= 3.5
+    ? StylingConstants.listingHeight.OPENED + StylingConstants.listingHeight.OPENED / 3
+    : StylingConstants.listingHeight.OPENED;
+    
     private height = new Animated.Value(StylingConstants.listingHeight.CLOSED);
 
     constructor(props) {
@@ -105,7 +109,7 @@ export class ApplicationListing extends React.Component<Props, State> {
     }
 
     openListing() {
-        this.animateTransition(StylingConstants.listingHeight.OPENED)
+        this.animateTransition(this.getAdaptedOpenedHeight)
         this.setState({ isOpened: true })
     }
 }

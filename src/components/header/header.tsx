@@ -85,7 +85,6 @@ export default class Header extends React.Component {
     header: {
         backgroundColor: '#FAFAFA',
         width: StylingConstants.display.width,
-        height: StylingConstants.display.height / 4,
         display: 'flex',
         alignItems: "center",
     },
