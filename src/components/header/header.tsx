@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet, TextInput, Picker, Modal, TouchableHighlight, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TextInput, Modal, ScrollView, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-material-dropdown';
- import { StylingConstants } from '../../constants';
+import { StylingConstants } from '../../constants';
+import { graphics } from '../../../assets/graphics';
  
 export default class Header extends React.Component {
     
@@ -19,10 +20,10 @@ export default class Header extends React.Component {
           }, {
             value: 'City',
           }];
-        return (   
-            <View style={[styles.header, styles.shadowUnderHeader]}>
+        return (
+            <View style={ styles.shadowUnderHeader }>
+            <View style={[styles.header]}>
                 <View style={styles.firstRow}>
-                        <Ionicons style={styles.icon}name="ios-menu" size={32}/>
                         <Text style={styles.appTitle}>Greener Apps</Text>
                         <Ionicons style={styles.icon}name="ios-information-circle-outline" size={32} onPress={() => {this.setModalVisible(true)}}/>
                 </View>
@@ -33,6 +34,8 @@ export default class Header extends React.Component {
                     <Dropdown textColor={"#707070"}
                         label='Sort by'
                         data={sortingData}
+                        style={{color: '#FFF'}}
+                        baseColor='#FFF'
                     />
                 </View>
                 <Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible}>
@@ -40,7 +43,7 @@ export default class Header extends React.Component {
                         <ScrollView>
                             <View style={styles.firstRowModal}>
                                 <Text style={styles.appTitle}>Greener Apps</Text>
-                                <Ionicons style={styles.icon}name="ios-close" size={32} onPress={() => {
+                                <Ionicons style={{ position: 'absolute', right: 50, top: 50 }} name="ios-close" size={32} onPress={() => {
                                 this.setModalVisible(!this.state.modalVisible)
                                 }}/>
                             </View>
@@ -60,6 +63,12 @@ export default class Header extends React.Component {
                         </ScrollView>
                     </View>
                 </Modal>    
+            </View>
+                <View>
+                    <Image 
+                    style={{ width: StylingConstants.display.width, backgroundColor: 'rgba(0, 0, 0, 0)' }}
+                    source={ graphics.WAVES }/>
+                </View>
             </View>
         );
     }
@@ -83,7 +92,7 @@ export default class Header extends React.Component {
      },  
     shadowUnderHeader: elevationShadowStyle(5),
     header: {
-        backgroundColor: '#FAFAFA',
+        backgroundColor: StylingConstants.colors.hkiBrightGreen,
         width: StylingConstants.display.width,
         display: 'flex',
         alignItems: "center",
@@ -107,11 +116,15 @@ export default class Header extends React.Component {
     appTitle: {
         paddingTop: 0,
         textAlign: 'center',
-        color: '#2CBC52',
+        color: '#FFF',
+        fontWeight: 'bold',
         fontSize: 30,
     }, 
     icon: {
-        color: '#707070',
+        color: '#FFF',
+        position: 'absolute',
+        top: StylingConstants.display.height / 19,
+        left: StylingConstants.display.width / 1.85,
         fontSize: 30,
         paddingLeft: 20,
         paddingRight: 30,
