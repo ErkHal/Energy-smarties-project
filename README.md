@@ -31,3 +31,8 @@ This app serves as a front-end for our innovation project, which helps users to 
     ```npm install```
 * Start project locally  
     ```expo start```
+
+## Troubleshooting
+
+* After auto-updating imports, app crashes because of unresolved modules
+    - Clear cache and run project again ``` expo r -c ```

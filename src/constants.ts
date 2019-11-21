@@ -1,4 +1,4 @@
-import { Dimensions, Linking } from 'react-native';
+import { Dimensions } from 'react-native';
 
 export const StylingConstants = {
     listingHeight: {
