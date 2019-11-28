@@ -10,6 +10,6 @@ export const StylingConstants = {
         height: Math.round(Dimensions.get('window').height)
     },
     colors: {
-        helsinkiBlue: '#0000BF'
+        hkiBrightGreen: '#00D7A7'
     }
 }

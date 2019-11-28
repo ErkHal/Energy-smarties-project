@@ -1,11 +1,12 @@
 import React, { Dispatch } from "react";
-import { View, Text, StyleSheet, TextInput, Modal, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TextInput, Modal, ScrollView, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-material-dropdown';
- import { StylingConstants } from '../../constants';
+import { StylingConstants } from '../../constants';
 import { ACTIONS, SearchAppAction } from "../../redux/actions";
 import { connect } from 'react-redux';
 import { SORTING_TYPE } from "../../types";
+import { graphics } from '../../../assets/graphics';
 
 interface Props {
     searchApps: () => void;
@@ -45,6 +46,7 @@ export class Header extends React.Component<Props, State> {
             enum: SORTING_TYPE.CITY_SCORE
           }];
 
+
         const { searchApps } = this.props;
 
         return (   
@@ -62,6 +64,8 @@ export class Header extends React.Component<Props, State> {
                     <Dropdown textColor={"#707070"}
                         label='Sort by'
                         data={sortingData}
+                        style={{color: '#FFF'}}
+                        baseColor='#FFF'
                         value={sortingData[0].value}
                         onChangeText={(_, index) => this.setState({sorting: sortingData[index].enum})}
                     />
@@ -71,7 +75,7 @@ export class Header extends React.Component<Props, State> {
                         <ScrollView>
                             <View style={styles.firstRowModal}>
                                 <Text style={styles.appTitle}>Greener Apps</Text>
-                                <Ionicons style={styles.icon}name="ios-close" size={32} onPress={() => {
+                                <Ionicons style={{ position: 'absolute', right: 50, top: 50 }} name="ios-close" size={32} onPress={() => {
                                 this.setModalVisible(!this.state.modalVisible)
                                 }}/>
                             </View>
@@ -91,6 +95,12 @@ export class Header extends React.Component<Props, State> {
                         </ScrollView>
                     </View>
                 </Modal>    
+            </View>
+                <View>
+                    <Image 
+                    style={{ width: StylingConstants.display.width, backgroundColor: 'rgba(0, 0, 0, 0)' }}
+                    source={ graphics.WAVES }/>
+                </View>
             </View>
         );
     }
@@ -114,7 +124,7 @@ export class Header extends React.Component<Props, State> {
      },  
     shadowUnderHeader: elevationShadowStyle(5),
     header: {
-        backgroundColor: '#FAFAFA',
+        backgroundColor: StylingConstants.colors.hkiBrightGreen,
         width: StylingConstants.display.width,
         display: 'flex',
         alignItems: "center",
@@ -138,11 +148,15 @@ export class Header extends React.Component<Props, State> {
     appTitle: {
         paddingTop: 0,
         textAlign: 'center',
-        color: '#2CBC52',
+        color: '#FFF',
+        fontWeight: 'bold',
         fontSize: 30,
     }, 
     icon: {
-        color: '#707070',
+        color: '#FFF',
+        position: 'absolute',
+        top: StylingConstants.display.height / 19,
+        left: StylingConstants.display.width / 1.85,
         fontSize: 30,
         paddingLeft: 20,
         paddingRight: 30,
