@@ -6,7 +6,9 @@ import { dummyApps } from '../../dummyApps';
 const INITIAL_STATE: AppListingsState = {
     applications: dummyApps,
     searchWord: null,
-    sortedBy: null
+    sortedBy: null,
+    loading: true,
+    failed: true
 }
 
 export const appListingsReducer = (state: AppListingsState, action) => {
@@ -15,9 +17,38 @@ export const appListingsReducer = (state: AppListingsState, action) => {
     }
     switch (action.type) {
 
-        case ACTIONS.GET_DEFAULT: {
-            state.applications = action.value
+        case ACTIONS.FETCHING_APPS: {
+            return {
+                ...state,
+                loading: true
+            }
         }
+        
+        case ACTIONS.STORE_SEARCH_PARAMS: {
+            return {
+                ...state,
+                searchWord: action.value.searchWord,
+                sortedBy: action.value.sortedBy
+            }
+        }
+
+        case ACTIONS.FETCH_APPS_SUCCESS: {
+            return {
+                ...state,
+                loading: false,
+                failed: false,
+                applications: action.value
+            }
+        }
+
+        case ACTIONS.FETCH_APPS_FAILED: {
+            return {
+                ...state,
+                loading: false,
+                failed: true
+            }
+        }
+
         default:
             return state
     }

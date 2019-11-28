@@ -64,14 +64,10 @@ export class ApplicationListing extends React.Component<Props, State> {
                                 outputRange: [0, 1],
                                 extrapolate: 'clamp'
                             })}}>
-                            <Left style={{flexBasis: '50%'}}>
-                                <Text style={styles.scoreLabel}>City</Text>
+                            <Left style={{flexBasis: '20%'}}>
                                 <Text style={styles.appCity}>{city}</Text>
                             </Left>
-                            <Right style={{flexBasis: '50%'}}>
-                                <Text style={{...styles.scoreLabel, textAlign: 'left'}}>Country</Text>
-                                <Text style={styles.appCountry}>{getCountryName(country)} {getFlagEmoji(country)}</Text>
-                            </Right>
+                            <Text style={styles.appCountry}>{getCountryName(country)} {getFlagEmoji(country)}</Text>
                             <Left style={{
                                 flexBasis: '100%',
                                 marginTop: 30

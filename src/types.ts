@@ -20,13 +20,17 @@ export interface AppScore {
 }
 
 export enum SORTING_TYPE {
-    TOTAL_SCORE = 'TOTAL_SCORE',
-    COUNTRY_SCORE = 'COUNTRY_SCORE',
-    CITY_SCORE = 'CITY_SCORE'
+    TOTAL_SCORE = 'total',
+    COUNTRY_SCORE = 'country',
+    CITY_SCORE = 'city',
+    COMPANY_SCORE = 'company',
+    ENERGY_SCORE = 'energy'
 }
 
 export interface AppListingsState {
     applications: Application[],
     searchWord?: string,
-    sortedBy?: SORTING_TYPE
+    sortedBy?: SORTING_TYPE,
+    loading: boolean,
+    failed: boolean
 }
