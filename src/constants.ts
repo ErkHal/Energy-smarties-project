@@ -8,5 +8,8 @@ export const StylingConstants = {
     display: {
         width: Math.round(Dimensions.get('window').width),
         height: Math.round(Dimensions.get('window').height)
+    },
+    colors: {
+        helsinkiBlue: '#0000BF'
     }
 }

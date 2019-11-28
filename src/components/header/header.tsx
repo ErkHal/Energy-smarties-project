@@ -1,38 +1,69 @@
-import React from "react";
-import { View, Text, StyleSheet, TextInput, Picker, Modal, TouchableHighlight, ScrollView } from "react-native";
+import React, { Dispatch } from "react";
+import { View, Text, StyleSheet, TextInput, Modal, ScrollView } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-material-dropdown';
  import { StylingConstants } from '../../constants';
+import { ACTIONS, SearchAppAction } from "../../redux/actions";
+import { connect } from 'react-redux';
+import { SORTING_TYPE } from "../../types";
+
+interface Props {
+    searchApps: () => void;
+}
+
+interface State {
+    searchWord?: string,
+    modalVisible: boolean,
+    sorting: SORTING_TYPE
+}
  
-export default class Header extends React.Component {
+export class Header extends React.Component<Props, State> {
     
   
-    state = {user: 'asia', modalVisible: false}
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchWord: null,
+            modalVisible: false,
+            sorting: SORTING_TYPE.TOTAL_SCORE
+        }
+    }
+
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
     }
     render() {
-        let sortingData = [{
-            value: 'Relevance',
+
+        const sortingData = [{
+            value: 'Total Score',
+            enum: SORTING_TYPE.TOTAL_SCORE,
           }, {
             value: 'Country',
+            enum: SORTING_TYPE.COUNTRY_SCORE,
           }, {
             value: 'City',
+            enum: SORTING_TYPE.CITY_SCORE
           }];
+
+        const { searchApps } = this.props;
+
         return (   
             <View style={[styles.header, styles.shadowUnderHeader]}>
                 <View style={styles.firstRow}>
-                        <Ionicons style={styles.icon}name="ios-menu" size={32}/>
                         <Text style={styles.appTitle}>Greener Apps</Text>
                         <Ionicons style={styles.icon}name="ios-information-circle-outline" size={32} onPress={() => {this.setModalVisible(true)}}/>
                 </View>
                 <View style={styles.secondRow}>
-                    <TextInput style={styles.textInput} placeholder="Search"/>
+                    <TextInput style={styles.textInput} placeholder="Search" 
+                        onEndEditing={(event) => searchApps(event.nativeEvent.text, this.state.sorting)}
+                    />
                 </View>
                 <View style={styles.thirdRow}>
                     <Dropdown textColor={"#707070"}
                         label='Sort by'
                         data={sortingData}
+                        value={sortingData[0].value}
+                        onChangeText={(_, index) => this.setState({sorting: sortingData[index].enum})}
                     />
                 </View>
                 <Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible}>
@@ -155,3 +186,17 @@ export default class Header extends React.Component {
         textAlign: 'justify'
     }
   })
+
+function mapDispatchToProps(dispatch: Dispatch<SearchAppAction>) {
+    return {
+      searchApps: (searchWord, sortBy: SORTING_TYPE) => {
+        dispatch({ 
+            type: ACTIONS.SEARCH_APPS,
+            searchWord,
+            sortBy
+        })
+      }
+    };
+}
+
+export default connect(null, mapDispatchToProps) (Header);

@@ -1,5 +1,4 @@
 import { Application, AppCategory } from './types';
-import { COUNTRY } from './countries';
 
 export const dummyApps : Application[] = [
     {
