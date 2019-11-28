@@ -3,6 +3,8 @@ import { StyleSheet, View } from 'react-native';
 import Header from './src/components/header/header';
 import AppList from './src/components/app-list/AppList';
 import * as Font from 'expo-font';
+import { Provider } from 'react-redux';
+import { store } from './src/redux/store';
 
 export default function App() {
   //componentDidMount() {
@@ -11,10 +13,12 @@ export default function App() {
     //});
   //}
   return (
-    <View style={styles.container}>
-      <Header/>
-      <AppList/>
-    </View>
+    <Provider store={store}>
+      <View style={styles.container}>
+        <Header/>
+        <AppList/>
+      </View>
+    </Provider>
   );
 }
 

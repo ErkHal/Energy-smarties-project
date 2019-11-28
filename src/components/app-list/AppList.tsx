@@ -1,28 +1,26 @@
-import React from "react";
-import { View, ScrollView, Text, StyleSheet } from "react-native";
+import React, { Dispatch } from "react";
+import { View, ScrollView, StyleSheet } from "react-native";
 import { ApplicationListing } from '../application-listing/ApplicationListing';
-import { dummyApps } from '../../dummyApps';
-import { Application } from "../../types";
-import { StylingConstants } from "../../constants";
+import { AppListingsState } from "../../types";
+import { connect } from 'react-redux';
+import { Action } from "redux";
+import { ACTIONS } from '../../redux/actions'
+import { AppState } from "../../redux/store";
 
-interface State {
-    applicationsList: Application[];
+interface Props {
+    appListState: AppListingsState
 }
 
-export default class AppList extends React.Component<{}, State> {
+class AppList extends React.Component<Props, {}> {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            applicationsList: dummyApps
-        }
       }
     
 
     render() {
 
-        const appCards = this.state.applicationsList.map((appListing, index) => {
+        const appCards = this.props.appListState.applications.map((appListing, index) => {
             return (
               <View
                 style={{
@@ -32,7 +30,7 @@ export default class AppList extends React.Component<{}, State> {
                 }}
                 key={index}>
                 <ApplicationListing 
-                    appInfo={this.state.applicationsList[index]}/>
+                    appInfo={this.props.appListState.applications[index]}/>
               </View>
             );
           });
@@ -61,3 +59,16 @@ export default class AppList extends React.Component<{}, State> {
           fontSize: 40
       }
   })
+
+  function mapDispatchToProps(dispatch: Dispatch<Action<any>>) {
+    return {
+      searchApps: () => dispatch({ type: ACTIONS.GET_SEARCHED }),
+      getDefault: () => dispatch({ type: ACTIONS.GET_DEFAULT }),
+    };
+  }
+
+  const mapStateToProps = (state: AppState) => {
+    return { appListState: state.appListingsState }
+  };
+
+  export default connect(mapStateToProps, mapDispatchToProps) (AppList);
