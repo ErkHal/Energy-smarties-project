@@ -37,7 +37,10 @@ export class ApplicationListing extends React.Component<Props, State> {
             return(
                 <View key={score.label} style={{ marginTop: 10 }}>
                     <Text style={styles.scoreLabel}>{score.label}</Text>
-                    <Text style={styles.scoreValue}>{score.value}</Text>
+                    <View style={styles.wholeLine}>
+                        <View width={score.value*20} style={styles.square} />
+                        <View width={200-score.value*20} style={styles.square2} />
+                    </View>
                 </View>
             )
         })
@@ -155,5 +158,18 @@ const styles = StyleSheet.create({
     },
     scoreValue: {
         marginTop: 5
-    }
+    },
+    square: {
+        height: 10,
+        backgroundColor: '#00D7A7'
+    },
+    square2: {
+        height: 5,
+        backgroundColor: '#4D4E57'
+    },
+    wholeLine: {
+        display: 'flex',
+        alignItems: "center",
+        flexDirection: 'row'
+    },
 })
