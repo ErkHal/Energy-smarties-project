@@ -49,7 +49,8 @@ export class Header extends React.Component<Props, State> {
 
         const { searchApps } = this.props;
 
-        return (   
+        return (
+            <View>
             <View style={[styles.header, styles.shadowUnderHeader]}>
                 <View style={styles.firstRow}>
                         <Text style={styles.appTitle}>Greener Apps</Text>
