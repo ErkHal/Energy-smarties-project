@@ -28,6 +28,7 @@ export default class ApiClient {
     }
 
     public async fetchSearchedApps(keyword: string, sortby: SORTING_TYPE) {
+        console.log(keyword)
         axios.defaults.timeout = 30000
         let url=`${rootUrl}${endpoints.search}`
         try {
@@ -37,6 +38,10 @@ export default class ApiClient {
                     sortby
                 }
             });
+            console.log(response.data)
+            if(response.data[0] == 'Nothing found') {
+                throw new Error('Empty response')
+            }
             return response.data;
         } catch (error) {
             throw error;

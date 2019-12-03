@@ -67,18 +67,20 @@ class AppList extends React.Component<Props, {}> {
     getAppListing() {
 
       const appCards = this.props.appListState.applications.map((appListing, index) => {
-        return (
-          <View
-            style={{
-              flex: 1,
-              marginVertical: 20,
-              marginHorizontal: 20
-            }}
-            key={index}>
-            <ApplicationListing 
-                appInfo={this.props.appListState.applications[index]}/>
-          </View>
-        );
+        if(appListing != null) {
+          return (
+            <View
+              style={{
+                flex: 1,
+                marginVertical: 20,
+                marginHorizontal: 20
+              }}
+              key={index}>
+              <ApplicationListing 
+                  appInfo={this.props.appListState.applications[index]}/>
+            </View>
+          ); 
+        }
       });
 
       return (
