@@ -17,7 +17,7 @@ export default class ApiClient {
         try {
             let response = await axios.get(url, {
                 params: {
-                    keyword: '',
+                    keyword: 'Navigation',
                     sortby: SORTING_TYPE.TOTAL_SCORE
                 }
             });

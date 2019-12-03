@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Animated, TouchableOpacity, PixelRatio } from "
 import { Application } from '../../types';
 import { Container, Left, Right } from 'native-base';
 import { StylingConstants } from "../../constants";
-import { getFlagEmoji, getCountryName } from '../../countries';
 
 interface Props {
     appInfo: Application;
@@ -68,14 +67,13 @@ export class ApplicationListing extends React.Component<Props, State> {
                                 extrapolate: 'clamp'
                             })}}>
                             <Left style={{flexBasis: '20%'}}>
-                                <Text style={styles.appCity}>{city}</Text>
+                        <Text style={styles.appCity}>{city}, {country}</Text>
                             </Left>
-                            <Text style={styles.appCountry}>{getCountryName(country)} {getFlagEmoji(country)}</Text>
                             <Left style={{
                                 flexBasis: '100%',
                                 marginTop: 30
                             }}>
-                                { partialScores }
+                            { partialScores }
                             </Left>
                         </Animated.View>
                     )}

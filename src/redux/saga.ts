@@ -13,7 +13,7 @@ export function* watchRequests() {
 }
 
 function* fetchDefaultApps() {
-  yield put({ type: ACTIONS.STORE_SEARCH_PARAMS, value: { searchWord: '', sortedBy: SORTING_TYPE.TOTAL_SCORE }})
+  yield put({ type: ACTIONS.STORE_SEARCH_PARAMS, value: { searchWord: 'Navigation', sortedBy: SORTING_TYPE.TOTAL_SCORE }})
   yield put({ type: ACTIONS.FETCHING_APPS })
   try {
     const results = yield call(api.fetchApps);
