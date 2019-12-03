@@ -95,16 +95,13 @@ export class Header extends React.Component<Props, State> {
                             <Text style={styles.h1}>Total score</Text>
                             <Text style={styles.modalText}>Weighted sum of individual scores scaled to 0-10: energy score (weight = 4), company score (weight = 2), city score (weight = 2) and country score (weight = 2). </Text>
                             <Text style={styles.h1}>Energy score</Text>
-                            <Text style={styles.modalText}>Battery consumption (mAh) of an app measured by Greenspector®. Energy scores can be compared only within a category. Lower consumption results in higher score.</Text>
+                            <Text style={styles.modalText}>Lower energy consumption (mAh) results in a higher score. Energy scores can be compared only within a category. Data source: Greenspector®.</Text>
                             <Text style={styles.h1}>Company score</Text>
-                            <Text style={styles.modalText}>Company-derived carbon footprint per employee. Lower carbon dioxide emissions result in higher score.</Text>
+                            <Text style={styles.modalText}>Lower carbon dioxide emissions per employee result in a higher score. Data source: company-derived carbon footprint statistics.</Text>
                             <Text style={styles.h1}>City score</Text>
-                            <Text style={styles.modalText}>Helsinki, Espoo and Vantaa: Carbon footprint for 2018 from Helsinki Region Infoshare (https://hri.fi/data/en_GB/dataset/paakaupunkiseudun-kasvihuonekaasupaastot/resource/665bf9b6-5627-4763-935c-9c9723c4b8b8)
-                            Other cities: Moran, D., Kanemoto K; Jiborn, M., Wood, R., Többen, J., and Seto, K.C. (2018) Carbon footprints of 13,000 cities. Environmental Research Letters DOI: 10.1088/1748-9326/aac72a.
-                            Lower carbon dioxide emissions per citizen result in higher score.</Text>
+                            <Text style={styles.modalText}>Lower carbon dioxide emissions per citizen result in a higher score. Data source: Moran, D., Kanemoto K; Jiborn, M., Wood, R., Többen, J., and Seto, K.C. (2018) Carbon footprints of 13,000 cities. Environmental Research Letters DOI: 10.1088/1748-9326/aac72a.</Text>
                             <Text style={styles.h1}>Country score</Text>
-                            <Text style={styles.modalText}>Data from the 2018 Global Green Economy Index (GGEI) published by Dual Citizen LLC (https://dualcitizeninc.com/global-green-economy-index/). 
-                            Higher index value results in higher score. </Text>
+                            <Text style={styles.modalText}>Higher index value results in a higher score. Data source: 2018 Global Green Economy Index (GGEI) published by Dual Citizen LLC (https://dualcitizeninc.com/global-green-economy-index/).</Text>
                         </ScrollView>
                     </View>
                 </Modal>    
