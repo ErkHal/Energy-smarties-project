@@ -1,11 +1,45 @@
 import axios from 'axios';
+import { ENV } from '../environment';
+import { SORTING_TYPE } from '../types';
+
+//Change this to change between local and "Production"
+const rootUrl = ENV.PROD.API_ROOT;
+
+const endpoints = {
+    search: '/search'
+}
 
 export default class ApiClient {
+
     public async fetchApps() {
-        console.log('Apiclient fetch apps')
+        axios.defaults.timeout = 30000
+        let url=`${rootUrl}${endpoints.search}`
+        try {
+            let response = await axios.get(url, {
+                params: {
+                    keyword: '',
+                    sortby: SORTING_TYPE.TOTAL_SCORE
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
     }
 
-    public async fetchSearchedApps() {
-        console.log('Apiclient fetch searched')
+    public async fetchSearchedApps(keyword: string, sortby: SORTING_TYPE) {
+        axios.defaults.timeout = 30000
+        let url=`${rootUrl}${endpoints.search}`
+        try {
+            let response = await axios.get(url, {
+                params: {
+                    keyword,
+                    sortby
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
     }
 }

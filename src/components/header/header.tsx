@@ -9,7 +9,7 @@ import { SORTING_TYPE } from "../../types";
 import { graphics } from '../../../assets/graphics';
 
 interface Props {
-    searchApps: () => void;
+    searchApps: (searchWord: string, sorting: SORTING_TYPE) => void;
 }
 
 interface State {
@@ -44,6 +44,12 @@ export class Header extends React.Component<Props, State> {
           }, {
             value: 'City',
             enum: SORTING_TYPE.CITY_SCORE
+          }, {
+            value: 'Energy',
+            enum: SORTING_TYPE.ENERGY_SCORE,
+          },{
+            value: 'Company',
+            enum: SORTING_TYPE.COMPANY_SCORE,
           }];
 
 
@@ -58,7 +64,10 @@ export class Header extends React.Component<Props, State> {
                 </View>
                 <View style={styles.secondRow}>
                     <TextInput style={styles.textInput} placeholder="Search" 
-                        onEndEditing={(event) => searchApps(event.nativeEvent.text, this.state.sorting)}
+                        onEndEditing={(event) => {
+                            this.setState({ searchWord: event.nativeEvent.text })
+                            searchApps(event.nativeEvent.text, this.state.sorting)
+                        }}
                     />
                 </View>
                 <View style={styles.thirdRow}>
@@ -68,7 +77,10 @@ export class Header extends React.Component<Props, State> {
                         style={{color: '#FFF'}}
                         baseColor='#FFF'
                         value={sortingData[0].value}
-                        onChangeText={(_, index) => this.setState({sorting: sortingData[index].enum})}
+                        onChangeText={(_, index) => { 
+                            this.setState({sorting: sortingData[index].enum})
+                            searchApps(this.state.searchWord ? this.state.searchWord : '', this.state.sorting)
+                        }}
                     />
                 </View>
                 <Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible}>
